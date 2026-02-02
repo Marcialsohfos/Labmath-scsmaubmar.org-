@@ -1,0 +1,13 @@
+{
+  "name": "lab-math-website",
+  "version": "1.0.0",
+  "description": "Site web professionnel pour Lab_Math",
+  "scripts": {
+    "build": "echo 'Build complet'",
+    "dev": "live-server --port=3000 --no-browser"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

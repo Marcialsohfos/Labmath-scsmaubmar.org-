@@ -7,27 +7,38 @@
     <meta name="description" content="Laboratoire expert en mathématiques appliquées, modélisation et solutions algorithmiques innovantes">
     <meta name="keywords" content="mathématiques, laboratoire, recherche, algorithmes, modélisation, data science">
     
-    <!-- Open Graph -->
     <meta property="og:title" content="Lab_Math | Laboratoire de Mathématiques Appliquées">
     <meta property="og:description" content="Solutions mathématiques innovantes pour les défis technologiques">
     <meta property="og:type" content="website">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/images/logo-icon.svg">
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     
-    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Styles spécifiques pour les cartes d'activités dynamiques */
+        .activity-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        .activity-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyan);
+        }
+        .loader-text { color: var(--cyan); font-family: 'JetBrains Mono', monospace; }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container nav-container">
             <div class="logo">
@@ -39,6 +50,7 @@
                 <li><a href="#home" class="nav-link active">Accueil</a></li>
                 <li><a href="#about" class="nav-link">À propos</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#activites" class="nav-link">Activités</a></li>
                 <li><a href="#expertise" class="nav-link">Expertise</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li class="nav-btn"><a href="#contact" class="btn btn-primary">Commencer</a></li>
@@ -50,7 +62,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-bg">
             <div class="gradient-circle circle-1"></div>
@@ -92,11 +103,9 @@
             </div>
         </div>
         
-        <!-- Math Pattern Overlay -->
         <div class="math-pattern"></div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="section about">
         <div class="container">
             <div class="section-header">
@@ -134,250 +143,65 @@
                     <p>Nous travaillons en synergie avec le SCSM Group pour des projets multidisciplinaires d'envergure.</p>
                 </div>
             </div>
-            
-            <div class="vision-card">
-                <div class="vision-content">
-                    <h3>Notre Vision</h3>
-                    <p>Lab_Math s'engage à repousser les frontières des mathématiques appliquées en développant des solutions qui transforment les défis complexes en opportunités d'innovation.</p>
-                    <p>En collaboration avec le <span class="highlight cyan">SCSM Group</span>, nous mutualisons nos expertises pour des projets de grande envergure, combinant recherche fondamentale et applications concrètes.</p>
-                </div>
-                <div class="vision-visual">
-                    <div class="math-equation">
-                        <span class="equation">∑(Innovation + Rigueur)</span>
-                        <span class="equals">=</span>
-                        <span class="solution gradient-text">Solutions</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="section services">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">
                     Applications & <span class="gradient-text">Services</span>
                 </h2>
-                <p class="section-subtitle">
-                    Des solutions mathématiques innovantes transformées en applications concrètes et performantes.
-                </p>
+                <p class="section-subtitle">Des solutions mathématiques innovantes transformées en applications concrètes.</p>
             </div>
             
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-microchip"></i>
-                    </div>
+                    <div class="service-icon"><i class="fas fa-microchip"></i></div>
                     <h3>Algorithmes Optimisés</h3>
-                    <p>Développement d'algorithmes haute performance pour le traitement et l'analyse de données complexes.</p>
-                    <div class="service-tags">
-                        <span class="tag">Optimisation</span>
-                        <span class="tag">Complexité</span>
-                        <span class="tag">Performance</span>
-                    </div>
+                    <p>Développement d'algorithmes haute performance pour le traitement de données complexes.</p>
                 </div>
-                
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Modélisation Mathématique</h3>
-                    <p>Création de modèles prédictifs et simulations pour divers domaines d'application.</p>
-                    <div class="service-tags">
-                        <span class="tag">Modèles</span>
-                        <span class="tag">Simulation</span>
-                        <span class="tag">Prédiction</span>
-                    </div>
+                    <div class="service-icon"><i class="fas fa-database"></i></div>
+                    <h3>Modélisation</h3>
+                    <p>Création de modèles prédictifs et simulations avancées.</p>
                 </div>
-                
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
+                    <div class="service-icon"><i class="fas fa-chart-line"></i></div>
                     <h3>Analyse de Données</h3>
-                    <p>Méthodes statistiques avancées et machine learning pour extraire des insights pertinents.</p>
-                    <div class="service-tags">
-                        <span class="tag">Stats</span>
-                        <span class="tag">ML</span>
-                        <span class="tag">Analytics</span>
-                    </div>
+                    <p>Méthodes statistiques et machine learning pour extraire des insights.</p>
                 </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Sécurité Algorithmique</h3>
-                    <p>Développement de solutions cryptographiques et de systèmes sécurisés basés sur les mathématiques.</p>
-                    <div class="service-tags">
-                        <span class="tag">Crypto</span>
-                        <span class="tag">Sécurité</span>
-                        <span class="tag">Blockchain</span>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Ingénierie Logicielle</h3>
-                    <p>Implémentation de solutions mathématiques dans des applications logicielles robustes.</p>
-                    <div class="service-tags">
-                        <span class="tag">Dev</span>
-                        <span class="tag">Implémentation</span>
-                        <span class="tag">Tests</span>
-                    </div>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3>Solutions Cloud</h3>
-                    <p>Déploiement de modèles mathématiques sur infrastructures cloud scalables.</p>
-                    <div class="service-tags">
-                        <span class="tag">Cloud</span>
-                        <span class="tag">Scalabilité</span>
-                        <span class="tag">Déploiement</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="collaboration-banner">
-                <h3>Collaboration SCSM Group</h3>
-                <p>Nos solutions sont intégrées dans des projets plus larges au sein du SCSM Group, permettant une approche multidisciplinaire complète.</p>
-                <a href="https://scsm.group" target="_blank" class="btn btn-outline">
-                    Visiter SCSM Group
-                    <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
         </div>
     </section>
 
-    <!-- Expertise Section -->
+    <section id="activites" class="section activities" style="background: var(--darker-bg);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Actualités & <span class="gradient-text">Activités</span></h2>
+                <p class="section-subtitle">Suivez en temps réel les dernières avancées de notre laboratoire.</p>
+            </div>
+
+            <div id="activites-container" class="features-grid">
+                <div class="text-center w-100 py-5">
+                    <p class="loader-text pulse">Initialisation de la connexion au laboratoire...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="expertise" class="section expertise">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    Domaines d'<span class="gradient-text">Expertise</span>
-                </h2>
-                <p class="section-subtitle">
-                    Nos compétences transversales couvrent l'ensemble du spectre des mathématiques appliquées et de l'informatique théorique.
-                </p>
+                <h2 class="section-title">Domaines d'<span class="gradient-text">Expertise</span></h2>
             </div>
-            
             <div class="expertise-grid">
                 <div class="expertise-list">
                     <div class="expertise-item">
-                        <div class="expertise-icon">
-                            <i class="fas fa-chart-pie cyan"></i>
-                        </div>
+                        <div class="expertise-icon"><i class="fas fa-chart-pie cyan"></i></div>
                         <div class="expertise-content">
                             <h3>Mathématiques Appliquées</h3>
-                            <ul>
-                                <li>Analyse numérique</li>
-                                <li>Optimisation combinatoire</li>
-                                <li>Théorie des graphes</li>
-                                <li>Équations différentielles</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="expertise-item">
-                        <div class="expertise-icon">
-                            <i class="fas fa-chart-line teal"></i>
-                        </div>
-                        <div class="expertise-content">
-                            <h3>Data Science</h3>
-                            <ul>
-                                <li>Apprentissage automatique</li>
-                                <li>Traitement du signal</li>
-                                <li>Analyse statistique</li>
-                                <li>Visualisation de données</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="expertise-item">
-                        <div class="expertise-icon">
-                            <i class="fas fa-microchip gold"></i>
-                        </div>
-                        <div class="expertise-content">
-                            <h3>Informatique</h3>
-                            <ul>
-                                <li>Algorithmique avancée</li>
-                                <li>Calcul haute performance</li>
-                                <li>Architecture logicielle</li>
-                                <li>Bases de données</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="expertise-item">
-                        <div class="expertise-icon">
-                            <i class="fas fa-lock purple"></i>
-                        </div>
-                        <div class="expertise-content">
-                            <h3>Sécurité</h3>
-                            <ul>
-                                <li>Cryptographie</li>
-                                <li>Théorie des codes</li>
-                                <li>Protocoles sécurisés</li>
-                                <li>Analyse de risques</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="methodology-card">
-                    <h3>Méthodologie</h3>
-                    
-                    <div class="methodology-steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <h4>Analyse du problème</h4>
-                                <p>Compréhension approfondie des besoins et contraintes.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <h4>Modélisation mathématique</h4>
-                                <p>Formalisation et abstraction des problématiques.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <h4>Développement algorithmique</h4>
-                                <p>Création de solutions efficaces et optimales.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="step">
-                            <div class="step-number">4</div>
-                            <div class="step-content">
-                                <h4>Validation & Implémentation</h4>
-                                <p>Tests rigoureux et déploiement en environnement réel.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="technologies">
-                        <h4>Technologies utilisées</h4>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">R</span>
-                            <span class="tech-tag">Julia</span>
-                            <span class="tech-tag">C++</span>
-                            <span class="tech-tag">TensorFlow</span>
-                            <span class="tech-tag">PyTorch</span>
-                            <span class="tech-tag">SQL</span>
-                            <span class="tech-tag">Docker</span>
+                            <ul><li>Analyse numérique</li><li>Optimisation</li></ul>
                         </div>
                     </div>
                 </div>
@@ -385,195 +209,82 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="section contact">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    Contactez<span class="gradient-text">-nous</span>
-                </h2>
-                <p class="section-subtitle">
-                    Discutons de vos défis mathématiques et découvrons comment nos solutions peuvent vous aider.
-                </p>
+                <h2 class="section-title">Contactez<span class="gradient-text">-nous</span></h2>
             </div>
-            
             <div class="contact-grid">
                 <div class="contact-form-container">
                     <form id="contactForm" class="contact-form">
                         <div class="form-group double">
-                            <div class="form-field">
-                                <label for="name">Nom complet *</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-field">
-                                <label for="email">Email *</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
+                            <div class="form-field"><input type="text" placeholder="Nom" required></div>
+                            <div class="form-field"><input type="email" placeholder="Email" required></div>
                         </div>
-                        
-                        <div class="form-group">
-                            <div class="form-field">
-                                <label for="subject">Sujet *</label>
-                                <input type="text" id="subject" name="subject" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="form-field">
-                                <label for="message">Message *</label>
-                                <textarea id="message" name="message" rows="6" required></textarea>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary btn-large btn-full">
-                            <i class="fas fa-paper-plane"></i>
-                            Envoyer le message
-                        </button>
+                        <button type="submit" class="btn btn-primary btn-full">Envoyer</button>
                     </form>
-                </div>
-                
-                <div class="contact-info">
-                    <div class="info-card">
-                        <h3>Coordonnées</h3>
-                        
-                        <div class="info-item">
-                            <div class="info-icon cyan-bg">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="info-content">
-                                <h4>Email</h4>
-                                <a href="mailto:contact@labmath.com">contact@labmath.com</a>
-                            </div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-icon cyan-bg">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="info-content">
-                                <h4>Téléphone</h4>
-                                <a href="tel:+33123456789">+33 1 23 45 67 89</a>
-                            </div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-icon cyan-bg">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="info-content">
-                                <h4>Adresse</h4>
-                                <p>Lab_Math<br>
-                                123 Avenue des Mathématiques<br>
-                                75000 Paris, France</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="hours-card">
-                        <h3>Heures d'ouverture</h3>
-                        <div class="hours-list">
-                            <div class="hours-item">
-                                <span>Lundi - Vendredi</span>
-                                <span class="cyan">9:00 - 18:00</span>
-                            </div>
-                            <div class="hours-item">
-                                <span>Samedi - Dimanche</span>
-                                <span class="muted">Fermé</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="response-card">
-                        <h3>Réponse rapide</h3>
-                        <p>Nous nous engageons à répondre à toutes les demandes sous <span class="cyan">24 heures ouvrables</span>.</p>
-                        <p>Pour les urgences, contactez-nous directement par téléphone.</p>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <div class="logo-icon">∑</div>
-                        <span class="logo-text">Lab_<span class="gradient-text">Math</span></span>
-                    </div>
-                    <p class="footer-description">
-                        Laboratoire d'excellence en mathématiques appliquées, développant des solutions innovantes 
-                        pour répondre aux défis technologiques contemporains.
-                    </p>
-                    <div class="social-links">
-                        <a href="https://github.com" target="_blank" class="social-link">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://linkedin.com" target="_blank" class="social-link">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://twitter.com" target="_blank" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Lab_Math</h4>
-                    <ul>
-                        <li><a href="#about">À propos</a></li>
-                        <li><a href="#">Équipe</a></li>
-                        <li><a href="#">Carrières</a></li>
-                        <li><a href="#">Publications</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#services">Développement</a></li>
-                        <li><a href="#">Consulting</a></li>
-                        <li><a href="#">Formation</a></li>
-                        <li><a href="#">R&D</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Ressources</h4>
-                    <ul>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-            </div>
-            
             <div class="footer-bottom">
-                <div class="copyright">
-                    © <span id="currentYear"></span> Lab_Math. Tous droits réservés.
-                </div>
-                
-                <div class="footer-legal">
-                    <a href="https://scsm.group" target="_blank">Membre du SCSM Group</a>
-                    <a href="#">Confidentialité</a>
-                    <a href="#">Conditions d'utilisation</a>
-                </div>
-            </div>
-            
-            <div class="footer-note">
-                <p>Les formules mathématiques contenues dans ce site sont protégées par le droit d'auteur.</p>
+                <div class="copyright">© <span id="currentYear"></span> Lab_Math. Tous droits réservés.</div>
             </div>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <button id="backToTop" class="back-to-top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <!-- JavaScript -->
     <script src="script.js"></script>
+
+    <script>
+        const ADMIN_API_URL = "https://admin-lab-math-org-5.onrender.com/api/activites";
+
+        async function chargerActivites() {
+            const container = document.getElementById('activites-container');
+            
+            try {
+                const response = await fetch(ADMIN_API_URL);
+                if (!response.ok) throw new Error("Erreur réseau");
+                
+                const data = await response.json();
+                container.innerHTML = '';
+
+                if (data.length === 0) {
+                    container.innerHTML = '<p class="text-center w-100">Aucune activité publiée pour le moment.</p>';
+                    return;
+                }
+
+                data.forEach(act => {
+                    // Utilisation de votre structure existante "feature-card" pour la cohérence visuelle
+                    container.innerHTML += `
+                        <div class="feature-card activity-card">
+                            <div class="feature-icon cyan-gradient">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <h3>${act.titre}</h3>
+                            <p>${act.description}</p>
+                            <div style="margin-top:15px; font-size: 0.8rem; opacity: 0.6;">
+                                <i class="fas fa-clock"></i> Publié le : ${act.date}
+                            </div>
+                        </div>`;
+                });
+
+            } catch (error) {
+                console.error("Erreur:", error);
+                container.innerHTML = `
+                    <div class="text-center w-100" style="grid-column: 1 / -1; padding: 40px; border: 1px dashed rgba(255,255,255,0.2); border-radius: 15px;">
+                        <i class="fas fa-plug fa-2x mb-3" style="color: var(--gold);"></i>
+                        <p>Le module des actualités se réveille... <br> 
+                        <small>Veuillez rafraîchir la page dans 30 secondes.</small></p>
+                        <button onclick="location.reload()" class="btn btn-outline" style="margin-top:15px; scale: 0.8;">Réessayer</button>
+                    </div>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', chargerActivites);
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>

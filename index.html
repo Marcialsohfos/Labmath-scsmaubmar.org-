@@ -22,20 +22,171 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Styles spécifiques pour les cartes d'activités dynamiques */
+        /* Styles spécifiques pour les cartes dynamiques */
         .activity-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 20px;
-            transition: transform 0.3s ease;
+            padding: 25px;
+            transition: all 0.3s ease;
             height: 100%;
+            display: flex;
+            flex-direction: column;
         }
+        
         .activity-card:hover {
             transform: translateY(-5px);
             border-color: var(--cyan);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
         }
-        .loader-text { color: var(--cyan); font-family: 'JetBrains Mono', monospace; }
+        
+        .activity-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .activity-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .activity-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .activity-author {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .activity-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--cyan);
+            opacity: 0.5;
+        }
+        
+        .loader {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--cyan);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loader-text { 
+            color: var(--cyan); 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.9rem;
+        }
+        
+        /* Styles pour les autres sections dynamiques */
+        .annonces-container, .realisations-container, .offres-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .annonce-card, .realisation-card, .offre-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .badge-info { background: rgba(0, 150, 255, 0.2); color: #4db8ff; }
+        .badge-urgence { background: rgba(255, 50, 50, 0.2); color: #ff6b6b; }
+        .badge-evenement { background: rgba(50, 255, 50, 0.2); color: #4cd964; }
+        
+        .badge-emploi { background: rgba(0, 150, 255, 0.2); color: #4db8ff; }
+        .badge-stage { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        .badge-formation { background: rgba(108, 92, 231, 0.2); color: #6c5ce7; }
+        
+        .view-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            transition: gap 0.3s ease;
+        }
+        
+        .view-more:hover {
+            gap: 12px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .annonces-container, .realisations-container, .offres-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .activity-card {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -51,9 +202,10 @@
                 <li><a href="#about" class="nav-link">À propos</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
                 <li><a href="#activites" class="nav-link">Activités</a></li>
-                <li><a href="#expertise" class="nav-link">Expertise</a></li>
+                <li><a href="#realisations" class="nav-link">Réalisations</a></li>
+                <li><a href="#annonces" class="nav-link">Annonces</a></li>
+                <li><a href="#offres" class="nav-link">Offres</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li class="nav-btn"><a href="#contact" class="btn btn-primary">Commencer</a></li>
             </ul>
             
             <button class="nav-toggle" id="navToggle">
@@ -88,8 +240,8 @@
                 </p>
                 
                 <div class="hero-buttons">
-                    <a href="#services" class="btn btn-primary btn-large">
-                        Découvrir nos projets
+                    <a href="#activites" class="btn btn-primary btn-large">
+                        Voir nos activités
                         <i class="fas fa-arrow-right"></i>
                     </a>
                     <a href="#contact" class="btn btn-outline btn-large">
@@ -175,6 +327,7 @@
         </div>
     </section>
 
+    <!-- SECTION ACTIVITÉS -->
     <section id="activites" class="section activities" style="background: var(--darker-bg);">
         <div class="container">
             <div class="section-header">
@@ -183,27 +336,60 @@
             </div>
 
             <div id="activites-container" class="features-grid">
-                <div class="text-center w-100 py-5">
-                    <p class="loader-text pulse">Initialisation de la connexion au laboratoire...</p>
+                <div class="loader">
+                    <div class="loader-spinner"></div>
+                    <p class="loader-text pulse">Chargement des activités...</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="expertise" class="section expertise">
+    <!-- SECTION RÉALISATIONS -->
+    <section id="realisations" class="section realisations">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Domaines d'<span class="gradient-text">Expertise</span></h2>
+                <h2 class="section-title">Nos <span class="gradient-text">Réalisations</span></h2>
+                <p class="section-subtitle">Découvrez les projets et innovations que nous avons concrétisés.</p>
             </div>
-            <div class="expertise-grid">
-                <div class="expertise-list">
-                    <div class="expertise-item">
-                        <div class="expertise-icon"><i class="fas fa-chart-pie cyan"></i></div>
-                        <div class="expertise-content">
-                            <h3>Mathématiques Appliquées</h3>
-                            <ul><li>Analyse numérique</li><li>Optimisation</li></ul>
-                        </div>
-                    </div>
+
+            <div id="realisations-container" class="features-grid">
+                <div class="loader">
+                    <div class="loader-spinner"></div>
+                    <p class="loader-text pulse">Chargement des réalisations...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION ANNONCES -->
+    <section id="annonces" class="section annonces" style="background: var(--darker-bg);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Annonces & <span class="gradient-text">Actualités</span></h2>
+                <p class="section-subtitle">Restez informé des dernières nouvelles et événements du laboratoire.</p>
+            </div>
+
+            <div id="annonces-container" class="annonces-container">
+                <div class="loader">
+                    <div class="loader-spinner"></div>
+                    <p class="loader-text pulse">Chargement des annonces...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION OFFRES -->
+    <section id="offres" class="section offres">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Opportunités & <span class="gradient-text">Offres</span></h2>
+                <p class="section-subtitle">Rejoignez notre équipe ou participez à nos programmes.</p>
+            </div>
+
+            <div id="offres-container" class="offres-container">
+                <div class="loader">
+                    <div class="loader-spinner"></div>
+                    <p class="loader-text pulse">Chargement des offres...</p>
                 </div>
             </div>
         </div>
@@ -239,52 +425,314 @@
     <script src="script.js"></script>
 
     <script>
-        const ADMIN_API_URL = "https://admin-lab-math-org-5.onrender.com/api/activites";
+        // Configuration de l'API
+        const API_BASE_URL = window.location.origin; // Utilise l'URL actuelle du site
+        const ACTIVITES_API = `${API_BASE_URL}/api/activites`;
+        const REALISATIONS_API = `${API_BASE_URL}/api/realisations`;
+        const ANNONCES_API = `${API_BASE_URL}/api/annonces`;
+        const OFFRES_API = `${API_BASE_URL}/api/offres`;
 
+        // Fonction pour formater la date
+        function formatDate(dateString) {
+            if (!dateString) return 'Date non spécifiée';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        // Fonction pour tronquer le texte
+        function truncateText(text, maxLength = 150) {
+            if (!text) return '';
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+
+        // Fonction pour afficher une image par défaut si aucune image n'est fournie
+        function getImageUrl(imageUrl) {
+            if (imageUrl && imageUrl.trim() !== '') {
+                return imageUrl;
+            }
+            // Image par défaut avec génération aléatoire
+            const colors = ['667eea', '764ba2', 'f093fb', 'f5576c', '4facfe', '00f2fe'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            return `https://via.placeholder.com/400x200/${color}/ffffff?text=Lab_Math`;
+        }
+
+        // Charger les activités
         async function chargerActivites() {
             const container = document.getElementById('activites-container');
             
             try {
-                const response = await fetch(ADMIN_API_URL);
-                if (!response.ok) throw new Error("Erreur réseau");
+                const response = await fetch(ACTIVITES_API);
+                if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
                 
                 const data = await response.json();
                 container.innerHTML = '';
 
-                if (data.length === 0) {
-                    container.innerHTML = '<p class="text-center w-100">Aucune activité publiée pour le moment.</p>';
+                if (!data.success || !data.data || data.data.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-calendar-plus"></i>
+                            <h3>Aucune activité publiée</h3>
+                            <p>Les activités seront affichées ici dès qu'elles seront publiées par l'équipe.</p>
+                        </div>`;
                     return;
                 }
 
-                data.forEach(act => {
-                    // Utilisation de votre structure existante "feature-card" pour la cohérence visuelle
-                    container.innerHTML += `
-                        <div class="feature-card activity-card">
-                            <div class="feature-icon cyan-gradient">
-                                <i class="fas fa-calendar-check"></i>
-                            </div>
-                            <h3>${act.titre}</h3>
-                            <p>${act.description}</p>
-                            <div style="margin-top:15px; font-size: 0.8rem; opacity: 0.6;">
-                                <i class="fas fa-clock"></i> Publié le : ${act.date}
-                            </div>
-                        </div>`;
+                // Limiter à 6 activités pour la page d'accueil
+                const activites = data.data.slice(0, 6);
+                
+                activites.forEach(activite => {
+                    const card = document.createElement('div');
+                    card.className = 'feature-card activity-card';
+                    card.innerHTML = `
+                        ${activite.image_url ? `
+                        <img src="${getImageUrl(activite.image_url)}" alt="${activite.titre}" class="activity-image">
+                        ` : ''}
+                        <h3 class="activity-title">${activite.titre}</h3>
+                        <p class="activity-description">${truncateText(activite.description)}</p>
+                        <div class="activity-meta">
+                            <span class="activity-author">
+                                <i class="fas fa-user"></i>
+                                ${activite.auteur || 'Lab_Math'}
+                            </span>
+                            <span class="activity-date">
+                                <i class="fas fa-calendar"></i>
+                                ${formatDate(activite.date_creation)}
+                            </span>
+                        </div>
+                    `;
+                    container.appendChild(card);
                 });
 
+                // Ajouter un lien "Voir plus" si plus de 6 activités
+                if (data.data.length > 6) {
+                    const voirPlus = document.createElement('div');
+                    voirPlus.className = 'text-center';
+                    voirPlus.style.gridColumn = '1 / -1';
+                    voirPlus.innerHTML = `
+                        <a href="#activites" class="view-more">
+                            Voir toutes les activités (${data.data.length})
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    `;
+                    container.appendChild(voirPlus);
+                }
+
             } catch (error) {
-                console.error("Erreur:", error);
+                console.error("Erreur lors du chargement des activités:", error);
                 container.innerHTML = `
-                    <div class="text-center w-100" style="grid-column: 1 / -1; padding: 40px; border: 1px dashed rgba(255,255,255,0.2); border-radius: 15px;">
-                        <i class="fas fa-plug fa-2x mb-3" style="color: var(--gold);"></i>
-                        <p>Le module des actualités se réveille... <br> 
-                        <small>Veuillez rafraîchir la page dans 30 secondes.</small></p>
-                        <button onclick="location.reload()" class="btn btn-outline" style="margin-top:15px; scale: 0.8;">Réessayer</button>
+                    <div class="empty-state">
+                        <i class="fas fa-wifi-slash"></i>
+                        <h3>Connexion interrompue</h3>
+                        <p>Impossible de charger les activités. Veuillez réessayer plus tard.</p>
+                        <button onclick="chargerActivites()" class="btn btn-outline" style="margin-top:15px;">
+                            <i class="fas fa-redo"></i> Réessayer
+                        </button>
                     </div>`;
             }
         }
 
-        document.addEventListener('DOMContentLoaded', chargerActivites);
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        // Charger les réalisations
+        async function chargerRealisations() {
+            const container = document.getElementById('realisations-container');
+            
+            try {
+                const response = await fetch(REALISATIONS_API);
+                if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
+                
+                const data = await response.json();
+                container.innerHTML = '';
+
+                if (!data.success || !data.data || data.data.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-trophy"></i>
+                            <h3>Aucune réalisation</h3>
+                            <p>Nos réalisations seront affichées ici prochainement.</p>
+                        </div>`;
+                    return;
+                }
+
+                const realisations = data.data.slice(0, 4);
+                
+                realisations.forEach(realisation => {
+                    const card = document.createElement('div');
+                    card.className = 'feature-card activity-card';
+                    card.innerHTML = `
+                        ${realisation.image_url ? `
+                        <img src="${getImageUrl(realisation.image_url)}" alt="${realisation.titre}" class="activity-image">
+                        ` : ''}
+                        ${realisation.categorie ? `
+                        <div class="badge badge-info">${realisation.categorie}</div>
+                        ` : ''}
+                        <h3 class="activity-title">${realisation.titre}</h3>
+                        <p class="activity-description">${truncateText(realisation.description)}</p>
+                        <div class="activity-meta">
+                            <span class="activity-date">
+                                <i class="fas fa-calendar"></i>
+                                ${realisation.date_realisation ? formatDate(realisation.date_realisation) : 'Date non spécifiée'}
+                            </span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Erreur lors du chargement des réalisations:", error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Données temporairement indisponibles</h3>
+                        <p>Les réalisations seront bientôt disponibles.</p>
+                    </div>`;
+            }
+        }
+
+        // Charger les annonces
+        async function chargerAnnonces() {
+            const container = document.getElementById('annonces-container');
+            
+            try {
+                const response = await fetch(ANNONCES_API);
+                if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
+                
+                const data = await response.json();
+                container.innerHTML = '';
+
+                if (!data.success || !data.data || data.data.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-bullhorn"></i>
+                            <h3>Aucune annonce</h3>
+                            <p>Les annonces importantes seront publiées ici.</p>
+                        </div>`;
+                    return;
+                }
+
+                const annonces = data.data.slice(0, 3);
+                
+                annonces.forEach(annonce => {
+                    const badgeClass = {
+                        'info': 'badge-info',
+                        'urgence': 'badge-urgence',
+                        'evenement': 'badge-evenement'
+                    }[annonce.type_annonce] || 'badge-info';
+                    
+                    const card = document.createElement('div');
+                    card.className = 'annonce-card';
+                    card.innerHTML = `
+                        <div class="badge ${badgeClass}">${annonce.type_annonce || 'Information'}</div>
+                        <h3 style="margin: 10px 0; color: white;">${annonce.titre}</h3>
+                        <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 15px;">
+                            ${truncateText(annonce.contenu, 200)}
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; color: rgba(255,255,255,0.5);">
+                            <span><i class="fas fa-calendar"></i> ${formatDate(annonce.date_creation)}</span>
+                            ${annonce.est_active ? '<span class="badge badge-info">Active</span>' : ''}
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Erreur lors du chargement des annonces:", error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash"></i>
+                        <h3>Annonces non disponibles</h3>
+                        <p>Le service des annonces est momentanément indisponible.</p>
+                    </div>`;
+            }
+        }
+
+        // Charger les offres
+        async function chargerOffres() {
+            const container = document.getElementById('offres-container');
+            
+            try {
+                const response = await fetch(OFFRES_API);
+                if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
+                
+                const data = await response.json();
+                container.innerHTML = '';
+
+                if (!data.success || !data.data || data.data.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-briefcase"></i>
+                            <h3>Aucune offre disponible</h3>
+                            <p>Revenez plus tard pour découvrir nos opportunités.</p>
+                        </div>`;
+                    return;
+                }
+
+                const offres = data.data.slice(0, 3);
+                
+                offres.forEach(offre => {
+                    const badgeClass = {
+                        'emploi': 'badge-emploi',
+                        'stage': 'badge-stage',
+                        'formation': 'badge-formation'
+                    }[offre.type_offre] || 'badge-info';
+                    
+                    const card = document.createElement('div');
+                    card.className = 'offre-card';
+                    card.innerHTML = `
+                        <div class="badge ${badgeClass}">${offre.type_offre || 'Offre'}</div>
+                        <h3 style="margin: 10px 0; color: white;">${offre.titre}</h3>
+                        <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 10px;">
+                            ${truncateText(offre.description, 150)}
+                        </p>
+                        ${offre.lieu ? `<p style="font-size: 0.9rem; color: var(--cyan);"><i class="fas fa-map-marker-alt"></i> ${offre.lieu}</p>` : ''}
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; color: rgba(255,255,255,0.5);">
+                            ${offre.date_limite ? `
+                                <span><i class="fas fa-clock"></i> Limite: ${formatDate(offre.date_limite)}</span>
+                            ` : ''}
+                            ${offre.est_active ? '<span class="badge badge-info">Active</span>' : '<span class="badge" style="background: rgba(255,255,255,0.1);">Expirée</span>'}
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Erreur lors du chargement des offres:", error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-briefcase"></i>
+                        <h3>Offres non disponibles</h3>
+                        <p>Les offres seront disponibles prochainement.</p>
+                    </div>`;
+            }
+        }
+
+        // Initialiser toutes les données au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mettre à jour l'année dans le footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Charger toutes les données
+            chargerActivites();
+            chargerRealisations();
+            chargerAnnonces();
+            chargerOffres();
+            
+            // Configurer le rechargement automatique toutes les 5 minutes
+            setInterval(() => {
+                chargerActivites();
+                chargerAnnonces();
+            }, 300000); // 5 minutes
+        });
+
+        // Gestion du formulaire de contact
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.');
+            this.reset();
+        });
     </script>
 </body>
 </html>
